@@ -1,10 +1,12 @@
 インフラ周りのやつ
 
-memo
+## 初期設定
 
 https://docs.aws.amazon.com/ja_jp/corretto/latest/corretto-17-ug/amazon-linux-install.html
 
 ~~~
+ssh -i ~/.ssh/minecraft-ec2.pem ec2-user@
+
 sudo yum install java-17-amazon-corretto
 
 $ java -version
@@ -62,4 +64,45 @@ git version
 }
 ~~~
 
+## インスタンス起動時にマイクラサーバを自動起動する
+
+ちゃんと詳しく調べる
+
+~~~
+sudo vim /etc/systemd/system/minecraft.service
+~~~
+
+~~~
+[Unit]
+Description=Minecraft Server
+After=network-online.target
+
+[Service]
+WorkingDirectory=/home/ec2-user/minecraft
+User=ec2-user
+
+ExecStart=/bin/bash -c '/bin/screen -DmS minecraft /bin/java -Xms2G -Xmx2G -jar paper-1.19-61.jar --nogui'
+
+ExecReload=/bin/screen -p 0 -S minecraft -X eval 'stuff "reload"\\015'
+
+ExecStop=/bin/screen -p 0 -S minecraft -X eval 'stuff "say Server Shutdown. Saving map..."\\015'
+ExecStop=/bin/screen -p 0 -S minecraft -X eval 'stuff "save-all"\\015'
+ExecStop=/bin/screen -p 0 -S minecraft -X eval 'stuff "stop"\\015'
+ExecStop=/bin/sleep 10
+
+Restart=on-failure
+RestartSec=60s
+
+[Install]
+WantedBy=network-online.target
+~~~
+
+~~~
+sudo systemctl daemon-reload
+sudo systemctl status minecraft
+sudo systemctl start minecraft
+sudo systemctl status minecraft
+screen -r minecraft
+# exit: Ctrl+A > d
+sudo systemctl enable minecraft
 ~~~
