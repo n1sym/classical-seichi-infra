@@ -4,6 +4,7 @@ memo
 
 https://docs.aws.amazon.com/ja_jp/corretto/latest/corretto-17-ug/amazon-linux-install.html
 
+~~~
 sudo yum install java-17-amazon-corretto
 
 $ java -version
@@ -20,3 +21,4 @@ sqlite3 development.db
 sqlite> CREATE TABLE account (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, uuid BLOB NOT NULL UNIQUE);
 sqlite> CREATE TABLE account_name (id INTEGER NOT NULL PRIMARY KEY, name TEXT NOT NULL);
 sqlite> CREATE TABLE seichi_count (id INTEGER NOT NULL PRIMARY KEY, count INTEGER NOT NULL);
+~~~
