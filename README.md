@@ -21,4 +21,45 @@ sqlite3 development.db
 sqlite> CREATE TABLE account (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, uuid BLOB NOT NULL UNIQUE);
 sqlite> CREATE TABLE account_name (id INTEGER NOT NULL PRIMARY KEY, name TEXT NOT NULL);
 sqlite> CREATE TABLE seichi_count (id INTEGER NOT NULL PRIMARY KEY, count INTEGER NOT NULL);
+
+sudo yum update -y
+sudo yum install git -y
+git version
+~~~
+
+## EC2起動後にレコード配置
+
+雑ポリシー
+
+~~~
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeInstances",
+                "route53:ChangeResourceRecordSets",
+                "route53:ListResourceRecordSets"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+~~~
+
+イベント
+
+~~~
+{
+  "source": ["aws.ec2"],
+  "detail-type": ["EC2 Instance State-change Notification"],
+  "detail": {
+    "instance-id": ["i-06**********82"],
+    "state": ["running", "stopping"]
+  }
+}
+~~~
+
 ~~~
