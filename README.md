@@ -106,3 +106,14 @@ screen -r minecraft
 # exit: Ctrl+A > d
 sudo systemctl enable minecraft
 ~~~
+
+## dynmap の初期設定
+
+~~~
+dynmap purgemap world_1 cave
+dmap mapdelete world_1:cave
+dynmap purgemap world_1_the_end flat
+dmap mapdelete world_1_the_end:flat
+dmap worldset world_1_the_end enabled:false
+dynmap fullrender world_1
+~~~
