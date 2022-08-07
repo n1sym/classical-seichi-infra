@@ -88,6 +88,7 @@ ExecReload=/bin/screen -p 0 -S minecraft -X eval 'stuff "reload"\\015'
 ExecStop=/bin/screen -p 0 -S minecraft -X eval 'stuff "say Server Shutdown. Saving map..."\\015'
 ExecStop=/bin/screen -p 0 -S minecraft -X eval 'stuff "save-all"\\015'
 ExecStop=/bin/screen -p 0 -S minecraft -X eval 'stuff "stop"\\015'
+ExecStop=/bin/sh backup.sh
 ExecStop=/bin/sleep 10
 
 Restart=on-failure
