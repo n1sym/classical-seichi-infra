@@ -118,3 +118,10 @@ dmap mapdelete world_1_the_end:flat
 dmap worldset world_1_the_end enabled:false
 dynmap fullrender world_1
 ~~~
+
+## 整地カウント to s3
+
+~~~
+sudo crontab -e
+0 15 * * * sh /home/ec2-user/minecraft/seichi_count_to_s3.sh
+~~~
